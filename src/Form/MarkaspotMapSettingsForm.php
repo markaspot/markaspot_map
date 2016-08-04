@@ -1,0 +1,167 @@
+<?php
+/**
+ * @file
+ * Contains Drupal\markaspot_map\MarkaspotOpen311Form
+ */
+namespace Drupal\markaspot_map\Form;
+
+use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Configure georeport settings for this site.
+ */
+class MarkaspotMapSettingsForm extends ConfigFormBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId() {
+    return 'markaspot_map_admin_settings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $config = $this->config('markaspot_map.settings');
+
+
+    $form['markaspot_map'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Map Types'),
+      '#collapsible' => TRUE,
+      '#description' => t('This setting allow you too choose a map tile operator of your choose. Be aware that you have to apply the same for the Geolocation Field settings</a>, too.'),
+      '#group' => 'settings',
+    );
+    $form['markaspot_map']['map_type'] = array(
+      '#type' => 'radios',
+      '#title' => t('Map type'),
+      '#default_value' => $config->get('map_type'),
+      '#options' => array(t('Google Maps'), t('Mapbox'), t('Other OSM')),
+    );
+    $form['markaspot_map']['mapbox'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Mapbox Map ID'),
+      '#default_value' => $config->get('mapbox'),
+      '#description' => t('Insert your Map ID (e.g. markaspot.Ejs23a) here'),
+    );
+    $form['markaspot_map']['osm_custom_tile_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Tile URL, if not from Mapbox'),
+      '#default_value' => $config->get('osm_custom_tile_url'),
+      '#description' => t('If you want to use a different tile service, enter the url pattern, e.g. http://{s}.somedomain.com/your-api-key/{z}/{x}/{y}.png'),
+    );
+    $form['markaspot_map']['map_background'] = array(
+      '#type' => 'textfield',
+      '#size' => 6,
+      '#title' => t('Define a background color the map container'),
+      '#default_value' => $config->get('map_background'),
+      '#description' => t('This should be of similar tone of the tile style'),
+    );
+    $form['markaspot_map']['osm_custom_attribution'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Attribution Statement, if not from Mapbox'),
+      '#default_value' => $config->get('osm_custom_attribution'),
+      '#description' => t('If you use an alternative Operator for serving tiles show special attribution'),
+    );
+    $form['markaspot_map']['timeline_date_format'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Dateformat'),
+      '#default_value' => $config->get('timeline_date_format'),
+      '#description' => t('Dateformat'),
+    );
+    $form['markaspot_map']['timeline_period'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Timeline Period'),
+      '#default_value' => $config->get('timeline_period'),
+      '#description' => t('Timeline period'),
+    );
+    $form['markaspot_map']['timeline_fps'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Timeline Period FPS'),
+      '#default_value' => $config->get('timeline_fps'),
+      '#description' => t('Timeline period frame per seconds'),
+    );
+
+    $form['markaspot_map']['center_lat'] = array(
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#title' => t('Latitude value for the map center'),
+      '#default_value' => $config->get('center_lat'),
+      '#description' => t(''),
+    );
+    $form['markaspot_map']['center_lng'] = array(
+
+      '#type' => 'textfield',
+      '#size' => 10,
+
+      '#title' => t('Longitude value for the map center'),
+      '#default_value' => $config->get('center_lng'),
+      '#description' => t(''),
+    );
+
+
+    return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * Helper function to get taxonomy term options for select widget.
+   *
+   * @parameter string $machine_name
+   *   Taxonomy machine name.
+   *
+   * @return array
+   *   Select options for form
+   */
+  function get_taxonomy_term_options($machine_name) {
+    $options = array();
+
+    // $vid = taxonomy_vocabulary_machine_name_load($machine_name)->vid;
+    $vid = $machine_name;
+    $options_source = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadTree($vid);
+
+
+    foreach ($options_source as $item) {
+      $key = $item->tid;
+      $value = $item->name;
+      $options[$key] = $value;
+    }
+
+    return $options;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $values = $form_state->getValues();
+
+    $this->config('markaspot_map.settings')
+      ->set('map_type', $values['map_type'])
+      ->set('mapbox', $values['mapbox'])
+      ->set('osm_custom_tile_url', $values['osm_custom_tile_url'])
+      ->set('osm_custom_attribution', $values['osm_custom_attribution'])
+      ->set('map_background', $values['map_background'])
+      ->set('timeline_date_format', $values['timeline_date_format'])
+      ->set('timeline_period', $values['timeline_period'])
+      ->set('timeline_fps', $values['timeline_fps'])
+      ->set('center_lat', $values['center_lat'])
+      ->set('center_lng', $values['center_lng'])
+      ->save();
+
+    parent::submitForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return [
+      'markaspot_map.settings',
+    ];
+  }
+}
+
