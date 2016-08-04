@@ -1,8 +1,5 @@
 <?php
-/**
- * @file
- * Contains Drupal\markaspot_map\MarkaspotOpen311Form
- */
+
 namespace Drupal\markaspot_map\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -25,8 +22,6 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('markaspot_map.settings');
-
-
     $form['markaspot_map'] = array(
       '#type' => 'fieldset',
       '#title' => t('Map Types'),
@@ -89,7 +84,7 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       '#size' => 10,
       '#title' => t('Latitude value for the map center'),
       '#default_value' => $config->get('center_lat'),
-      '#description' => t(''),
+      '#description' => t('Enter in decimal format, e.g 50.21'),
     );
     $form['markaspot_map']['center_lng'] = array(
 
@@ -98,39 +93,10 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
 
       '#title' => t('Longitude value for the map center'),
       '#default_value' => $config->get('center_lng'),
-      '#description' => t(''),
+      '#description' => t('Enter in decimal format, e.g 6.8232'),
     );
 
-
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * Helper function to get taxonomy term options for select widget.
-   *
-   * @parameter string $machine_name
-   *   Taxonomy machine name.
-   *
-   * @return array
-   *   Select options for form
-   */
-  function get_taxonomy_term_options($machine_name) {
-    $options = array();
-
-    // $vid = taxonomy_vocabulary_machine_name_load($machine_name)->vid;
-    $vid = $machine_name;
-    $options_source = \Drupal::entityTypeManager()
-      ->getStorage('taxonomy_term')
-      ->loadTree($vid);
-
-
-    foreach ($options_source as $item) {
-      $key = $item->tid;
-      $value = $item->name;
-      $options[$key] = $value;
-    }
-
-    return $options;
   }
 
   /**
@@ -163,5 +129,5 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       'markaspot_map.settings',
     ];
   }
-}
 
+}

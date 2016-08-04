@@ -1,19 +1,9 @@
-/*
-#map.stuck {
-    position: fixed!important;
-    right: 0;
-    top: 0;
-}
-*/
-
 
 .leaflet-clickable {
     -webkit-animation: pulsate 1s ease-in;
     -webkit-animation: pulsate 1s ease-out;
     -webkit-animation-iteration-count: infinite;
 }
-
-
 
 .pulsar {
     border: 3px solid #999;
@@ -30,81 +20,6 @@
     50% {opacity: 1.0;}
     100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
-
-
-/**
- * Throbber.
- */
-.ajax-progress-fullscreen {
-    visibility: visible;
-    z-index: 9999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: left;
-    background: #fff;
-    opacity: 0.6;
-}
-
-.ajax-progress-fullscreen{
-    display: none;
-}
-.ajax-progress-fullscreen{
-    display: block;
-    animation-duration: 13s;
-    animation-name: fadeInFromNone;
-    animation-fill-mode: forwards;
-    -webkit-animation-duration: 13s;
-    -webkit-animation-name: fadeInFromNone;
-    -webkit-animation-fill-mode: forwards;
-    -ms-animation-duration: 13s;
-    -ms-animation-name: fadeInFromNoneIE;
-    -ms-animation-fill-mode: forwards;
-}
-@-webkit-keyframes fadeInFromNone {
-    0% {
-        opacity: 0
-    }
-
-    10% {
-        opacity: 0.9
-    }
-
-    100% {
-        opacity: 0.7
-    }
-}
-
-@keyframes fadeInFromNoneIE {
-    0% {
-        opacity: 0
-    }
-
-    10% {
-        opacity: 0.9
-    }
-
-    100% {
-        opacity: 0.7
-    }
-}
-
-@keyframes fadeInFromNone {
-    0% {
-        opacity: 0
-    }
-
-    10% {
-        opacity: 0.9
-    }
-
-    100% {
-        opacity: 0
-    }
-}
-
 
 
 .fa.active {
