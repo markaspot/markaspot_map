@@ -30,11 +30,16 @@
       "type": "package",
       "package": {
         "name": "mrohnstock/leaflet",
-        "version": "1.0.0-rc.2",
+        "version": "1.0.0-rc.3",
         "type": "drupal-library",
         "dist": {
-          "url": "https://github.com/mrohnstock/leaflet/archive/1.0.0-rc.2.zip",
+          "url": "https://github.com/mrohnstock/leaflet/archive/1.0.0-rc.3.zip",
           "type": "zip"
+        },
+        "source": {
+          "url": "https://github.com/mrohnstock/leaflet.git",
+          "type": "git",
+          "reference": "1.0.0-rc.3"
         }
       }
     },
