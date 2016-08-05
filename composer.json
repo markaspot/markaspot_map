@@ -25,10 +25,6 @@
   },
   "repositories"      : [
     {
-      "type" : "composer",
-      "url"  : "https://packagist.drupal-composer.org"
-    },
-    {
       "type"    : "package",
       "package" : {
         "name"    : "mrohnstock/leaflet",
