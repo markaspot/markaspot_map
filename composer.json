@@ -27,10 +27,6 @@
   },
   "repositories": [
     {
-      "type": "composer",
-      "url": "https://packages.drupal.org/8"
-    },
-    {
       "type": "package",
       "package": {
         "name": "mrohnstock/leaflet",
