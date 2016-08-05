@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46c134ffbf37f118b93834a1c8bfc7d9",
-    "content-hash": "d0c4a7b88c5ea8ec24b8279a5a6f58c9",
+    "hash": "bd28726c3e5fe8327f71bd4aea50fe1d",
+    "content-hash": "57490d3b286a3486e9ffba78ec80d45c",
     "packages": [
         {
             "name": "CliffCloud/Leaflet.EasyButton",
