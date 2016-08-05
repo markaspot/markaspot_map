@@ -23,7 +23,7 @@
     "nezasa/iso8601-js-period": "0.2.0.0",
     "StevenLevithan/dateFormat": "1.2.3",
     "Leaflet/Leaflet.heat": "0.2.0",
-    "FortAwesome/Font-Awesome": "4.6.3",
+    "FortAwesome/Font-Awesome": "4.6.3"
   },
   "repositories": [
     {
