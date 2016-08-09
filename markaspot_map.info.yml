@@ -3,3 +3,10 @@ package: Mark-a-Spot
 core: 8.x
 description: 'Provides a map block for a Mark-a-Spot Installation'
 type: module
+
+dependencies:
+  - service_request
+  - search_api
+  - search_api_db
+  - better_exposed_filters
+  - views_infinite_scroll

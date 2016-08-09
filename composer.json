@@ -14,7 +14,7 @@
   },
   "require": {
     "composer/installers": "~1.0",
-    "mrohnstock/leaflet": "1.0.0-rc.3",
+    "drmonty/leaflet": "1.0.0-rc.3",
     "lvoogdt/Leaflet.awesome-markers": "2.0.2",
     "Leaflet/Leaflet.fullscreen": "1.0.1",
     "CliffCloud/Leaflet.EasyButton": "1.3.1",
@@ -29,7 +29,7 @@
     {
       "type": "package",
       "package": {
-        "name": "mrohnstock/leaflet",
+        "name": "drmonty/leaflet",
         "version": "1.0.0-rc.3",
         "type": "drupal-library",
         "dist": {
