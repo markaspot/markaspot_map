@@ -28,7 +28,11 @@
     "nezasa/iso8601-js-period": "0.2.0.0",
     "StevenLevithan/dateFormat": "1.2.3",
     "Leaflet/Leaflet.heat": "0.2.0",
-    "FortAwesome/Font-Awesome": "4.6.3"
+    "FortAwesome/Font-Awesome": "4.6.3",
+    "drupal/search_api": "1.x-dev",
+    "drupal/views_infinite_scroll": "1.x-dev",
+    "drupal/better_exposed_filters": "dev-3.x",
+    "markaspot/service_request": "dev-master"
   },
   "repositories": [
     {
