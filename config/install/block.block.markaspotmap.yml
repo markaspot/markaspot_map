@@ -1,13 +1,9 @@
-uuid: 2607201631aa80fa1-f61b-19820-88dd-80fa1f61b9d6c6348dd541e404c4826072016
 langcode: en
 status: true
 dependencies:
   module:
-    - facets
     - markaspot_map
     - system
-_core:
-  default_config_hash: IE6y9zq5hmnsnKrELr1LmTUnK_F_qxUZoECSjpEqwVk
 id: markaspotmap
 theme: masradix
 region: map
@@ -20,12 +16,6 @@ settings:
   provider: markaspot_map
   label_display: '0'
 visibility:
-  other_facet:
-    id: other_facet
-    facets: ''
-    facet_value: ''
-    negate: false
-    context_mapping: {  }
   request_path:
     id: request_path
     pages: "/requests\r\n<front>"
