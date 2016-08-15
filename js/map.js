@@ -80,13 +80,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var sticky;
 
       selector.once('markaspot_map').each(function () {
-        
-        if (selector.length) {
-          sticky = new Waypoint.Sticky({
-            element: selector[0],
-            wrapper: '<div class="sticky-wrapper waypoint" />'
-          });
-        }
 
         Drupal.Markaspot.maps[0] = L.map('map', {
           fullscreenControl: true,
