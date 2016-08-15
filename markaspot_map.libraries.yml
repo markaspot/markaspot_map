@@ -33,7 +33,7 @@ leaflet.easybutton:
     /libraries/Leaflet.EasyButton/src/easy-button.js: {}
   css:
     component:
-       /libraries/Leaflet.Easybutton/src/easy-button.css: {}
+       /libraries/Leaflet.EasyButton/src/easy-button.css: {}
 
 # leaflet.transitionedicon:
 #  js:
