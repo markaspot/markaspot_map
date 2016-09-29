@@ -1,10 +1,11 @@
 leaflet:
   js:
     /libraries/leaflet/js/leaflet.min.js: {}
+    # https://rawgithub.com/Leaflet/Leaflet/v0.7.7/dist/leaflet-src.js: { type: external}
   css:
     component:
+      # https://rawgithub.com/Leaflet/Leaflet/v0.7.7/dist/leaflet.css: { type: external}
       /libraries/leaflet/css/leaflet.css: {}
-      #/libraries/leaflet/dist/leaflet.css: {}
 
 #leaflet.markercluster:
  # js:
