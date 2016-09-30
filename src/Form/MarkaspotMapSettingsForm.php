@@ -79,6 +79,14 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       '#description' => t('Timeline period frame per seconds'),
     );
 
+    $form['markaspot_map']['nid_selector'] = array(
+      '#type' => 'textfield',
+      '#size' => 10,
+      '#title' => t('Selector to read service request nids from markup'),
+      '#default_value' => $config->get('nid_selector'),
+      '#description' => t('Enter a valid DOM selector, e.g ".row article'),
+    );
+
     $form['markaspot_map']['center_lat'] = array(
       '#type' => 'textfield',
       '#size' => 10,
@@ -114,6 +122,7 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       ->set('timeline_date_format', $values['timeline_date_format'])
       ->set('timeline_period', $values['timeline_period'])
       ->set('timeline_fps', $values['timeline_fps'])
+      ->set('nid_selector', $values['nid_selector'])
       ->set('center_lat', $values['center_lat'])
       ->set('center_lng', $values['center_lng'])
       ->save();
