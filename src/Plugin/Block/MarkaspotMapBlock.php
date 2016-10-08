@@ -32,6 +32,7 @@ class MarkaspotMapBlock extends BlockBase {
           'markaspot_map/font-awesome',
           'markaspot_map/leaflet.timedimension',
           'markaspot_map/leaflet.transitionedicon',
+          'markaspot_map/leaflet.markercluster',
           'markaspot_map/map',
         ),
       ),

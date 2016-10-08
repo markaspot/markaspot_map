@@ -7,13 +7,13 @@ leaflet:
       # https://rawgithub.com/Leaflet/Leaflet/v0.7.7/dist/leaflet.css: { type: external}
       /libraries/leaflet/css/leaflet.css: {}
 
-#leaflet.markercluster:
- # js:
-  #  /libraries/leaflet.markercluster/dist/leaflet.markercluster.js: {}
-  #css:
-   # component:
-    #  /libraries/leaflet.markercluster/dist/MarkerCluster.css: {}
-     # /libraries/leaflet.markercluster/dist/MarkerCluster.Default.css: {}
+leaflet.markercluster:
+  js:
+    /libraries/leaflet.markercluster/dist/leaflet.markercluster.js: {}
+  css:
+    component:
+      /libraries/leaflet.markercluster/dist/MarkerCluster.css: {}
+      /libraries/leaflet.markercluster/dist/MarkerCluster.Default.css: {}
 
 leaflet.awesome-markers:
   js:
