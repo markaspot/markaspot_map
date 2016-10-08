@@ -69,6 +69,8 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
   Drupal.Markaspot = {};
   Drupal.Markaspot.maps = [];
   var markerLayer;
+  var scrolledMarker = [];
+  var passed;
 
   Drupal.behaviors.markaspot_map = {
 
@@ -86,8 +88,8 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           fullscreenControl: true,
           scrollWheelZoom: false,
           maxZoom: 18,
-          setZoom: 14,
-          center: [50.9, 6.9] // starting position
+          setZoom: 16,
+          center: [masSettings.center_lat, masSettings.center_lng] // starting position
         });
 
         $('#map').css('background-color:' + masSettings.map_background);
@@ -98,8 +100,10 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         map.addLayer(tileLayer);
         // map.dragging.disable();
 
-        markerLayer = new L.featureGroup();
-        map.addLayer(markerLayer);
+        //markerLayer = new L.featureGroup();
+        markerLayer = L.markerClusterGroup();
+  
+        // map.addLayer(markerLayer);
 
         // Drupal.markaspot_map.hideMarkers();
         // Show Markers additionally ob button click.
@@ -108,7 +112,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           states: [{
             stateName: 'add-markers',
             icon: 'fa-map-marker',
-            title: 'add random markers',
+            title: 'Show all Markers on the map',
             onClick: function(control) {
               Drupal.markaspot_map.showMarkers();
               control.state('remove-markers');
@@ -167,74 +171,73 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           }]
         });
         timeControls.addTo(map);
+        passed = 0;
 
         // end once.
       });
 
 
-      var scrolledMarker = [];
       // Get all nids to be called via ajax(Open311).
-      var nids = Drupal.markaspot_map.getNids(masSettings.nid_selector);
-      // Load and showData on map.
-      Drupal.markaspot_map.load(function (data) {
-        Drupal.markaspot_map.showData(data);
+      // Once not working with ajax loaded views, so passed is used to control
+      // how often we load georeport v2 data.
+      
+      if (passed == 0 || passed >= 3) {
+        var nids = Drupal.markaspot_map.getNids(masSettings.nid_selector);
+        console.log(nids);
+        markerLayer.clearLayers();
+        // Load and showData on map.
+        Drupal.markaspot_map.load(function (data) {
+          Drupal.markaspot_map.showData(data);
+    
+          markerLayer.eachLayer(function (layer) {
+            // Define marker-properties for Scrolling
+            var nid = layer.options.title;
+            scrolledMarker[nid] = {
+              latlng: layer.getLatLng(),
+              title: layer.options.title,
+              color: layer.options.color
+            };
+          });
+        }, nids);
+        console.log("data", passed);
+  
+  
+      }
+      passed++;
+      console.log(passed);
 
-        markerLayer.eachLayer(function (layer) {
-          // Define marker-properties for Scrolling
-          var nid = layer.options.title;
-          scrolledMarker[nid] = {
-            latlng: layer.getLatLng(),
-            title: layer.options.title,
-            color: layer.options.color
-          };
-        });
-      }, nids);
+
 
 
       // Theme independent selector
       var serviceRequests = $(masSettings.nid_selector);
 
       for (var i = 0, length = serviceRequests.length; i < length; i++) {
+        
+        // Event of hovering
+        $(serviceRequests[i]).hover(function(){
+          var nid = this.getAttribute('data-history-node-id');
+          Drupal.markaspot_map.showCircle(scrolledMarker[nid]);
+        });
+        
         new Waypoint({
           element: serviceRequests[i],
           handler: function (direction) {
 
             var nid = this.element.getAttribute('data-history-node-id');
-            var map = Drupal.Markaspot.maps[0];
-
-            map.setZoom(13);
-
-            var previousWaypoint = this.previous();
-            var nextWaypoint = this.next();
-            if (previousWaypoint) {
-              $(previousWaypoint.element).removeClass('focus');
+            
+            var previousWp = this.previous();
+            var nextWp = this.next();
+            if (previousWp) {
+              $(previousWp.element).removeClass('focus');
             }
-            if (nextWaypoint) {
-              $(nextWaypoint.element).removeClass('focus');
+            if (nextWp) {
+              $(nextWp.element).removeClass('focus');
             }
             $(this.element).addClass('focus');
 
             if (scrolledMarker.hasOwnProperty(nid)) {
-              var color = scrolledMarker[nid].color;
-              var circle = L.circle(scrolledMarker[nid].latlng, 200, {
-                color: color,
-                weight: 2,
-                fillColor: color,
-                fillOpacity: 0.2,
-                opacity: 0.7
-              }).addTo(map);
-
-              map.panTo(scrolledMarker[nid].latlng, {
-                animate:true,
-                duration: 0.5
-              });
-
-              // map.setView(scrolledMarker[nid].latlng, 13);
-
-              setTimeout(function () {
-                // marker.setIcon(icon);
-                map.removeLayer(circle);
-              }, 1300);
+              Drupal.markaspot_map.showCircle(scrolledMarker[nid]);
             }
           },
           offset: '40%'
@@ -246,7 +249,32 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
 
   Drupal.markaspot_map = {
-
+    
+    // Showing a Circle Marker on hover and scroll over
+    showCircle: function(marker){
+      var map = Drupal.Markaspot.maps[0];
+      // map.setZoom(13);
+      var color = marker.color;
+      var circle = L.circle(marker.latlng, 100, {
+        color: color,
+        weight: 2,
+        fillColor: color,
+        fillOpacity: 0.2,
+        opacity: 0.7
+      }).addTo(map);
+  
+      map.panTo(marker.latlng, {
+        animate:true,
+        duration: 0.5
+      });
+  
+      // map.setView(marker.latlng, 15);
+  
+      setTimeout(function () {
+        // marker.setIcon(icon);
+        map.removeLayer(circle);
+      }, 1300);
+    },
 
     showTimeController: function(map){
       // start of TimeDimension manual instantiation
@@ -414,7 +442,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       });
     },
 
-    createHeatMapLayer: function(map){
+    createHeatMapLayer: function(){
 
       var geoJson = Drupal.markaspot_map.createGeoJson();
       var heatPoints =  Drupal.markaspot_map.transformGeoJson2heat(geoJson, 4);
@@ -559,6 +587,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           time: request.requested_datetime
         });
         markerLayer.addLayer(marker);
+        console.log(marker.options.title);
 
       });
       var size = markerLayer.getLayers().length;

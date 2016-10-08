@@ -8,4 +8,4 @@ timeline_period: P1D
 timeline_fps: '15'
 nid_selector: '.row article.service-request'
 center_lat: 50.69
-center_long: 6.89
+center_lng: 6.89
