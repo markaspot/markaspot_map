@@ -10,7 +10,7 @@
     -webkit-border-radius: 30px;
     height: 18px;
     width: 18px;
-    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation: pulsate 1s ease-in;
     -webkit-animation-iteration-count: 2;
     /*opacity: 0.0*/
 }
