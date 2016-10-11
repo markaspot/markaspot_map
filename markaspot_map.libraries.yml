@@ -9,7 +9,7 @@ leaflet:
 
 leaflet.markercluster:
   js:
-    /libraries/leaflet.markercluster/dist/Leaflet.markercluster.js: {}
+    /libraries/Leaflet.markercluster/dist/Leaflet.markercluster.js: {}
   css:
     component:
       /libraries/Leaflet.markercluster/dist/MarkerCluster.css: {}
