@@ -173,25 +173,24 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           }]
         });
         timeControls.addTo(map);
+        // empty storedNids.
         localStorage.setItem("storedNids", JSON.stringify(''));
-        
         // end once.
+      
       });
       
-      
       // Get all nids to be called via ajax(Open311).
-      // jQuery.Once is not working with ajax loaded views, which meand requests.json is loaded
+      // jQuery.Once is not working with ajax loaded views, which means requests.json is loaded
       // twice in logged in state.
       // We check which nids are shown already and we now store nids in localStorage.
       var storedNids = JSON.parse(localStorage.getItem("storedNids"));
       var nids = Drupal.markaspot_map.getNids(masSettings.nid_selector);
-      // console.log("fresh" , nids);
+      // console.log("nids jquery", nids.length);
+      // console.log("stored on more", storedNids.length);
       
-      localStorage.setItem("storedNids", JSON.stringify(nids));
-      // console.log("stored", storedNids);
-      if (nids != storedNids) {
-        // Xheck which nids are shown, stored or freshly selected by jquery.
-        var nids2markers = storedNids ? storedNids : nids;
+      if (nids.length != storedNids.length) {
+        
+        localStorage.setItem("storedNids", JSON.stringify(nids));
         
         markerLayer.clearLayers();
         // Load and showData on map.
@@ -206,7 +205,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               color: layer.options.color
             };
           });
-        }, nids2markers);
+        }, nids);
       }
       
       
