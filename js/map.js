@@ -98,11 +98,12 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         var map = Drupal.Markaspot.maps[0];
         map.addLayer(tileLayer);
         // map.dragging.disable();
+        map.dragging.disable();
         
         //markerLayer = new L.featureGroup();
         markerLayer = L.markerClusterGroup({
-          disableClusteringAtZoom: 15,
-          maxClusterRadius: 120
+          // disableClusteringAtZoom: 15,
+          // maxClusterRadius: 120
         });
         
         map.addLayer(markerLayer);
@@ -255,18 +256,14 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var map = Drupal.Markaspot.maps[0];
       
       // get zoomlevel to set circle radius
-      
       var currentZoom = map.getZoom();
-      if (currentZoom <= 15) {
-        map.setZoom(15);
-      }
       
       var color = marker.color;
-      var circle = L.circle(marker.latlng, 400 / currentZoom, {
+      var circle = L.circle(marker.latlng, 1600 / currentZoom, {
         color: color,
-        weight: 2,
+        weight: 3,
         fillColor: color,
-        fillOpacity: 0.2,
+        fillOpacity: 0.3,
         opacity: 0.7
       }).addTo(map);
       
@@ -393,7 +390,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var geoJson = Drupal.markaspot_map.createGeoJson();
       // Set bounds from geojson.
       map.fitBounds(L.geoJson(geoJson).getBounds());
-      
+      console.log(L.geoJson(geoJson).getBounds());
       if (typeof geoJson !== 'undefined') {
         return L.geoJson(geoJson, {
           pointToLayer: function (feature, latlng) {
@@ -424,7 +421,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       // console.log(drupalSettings['mas']['timeline_period']);
       if (typeof geoJsonLayer !== 'undefined') {
         return new L.TimeDimension.Layer.MaS(geoJsonLayer, {
-          updateTimeDimension: false,
+          updateTimeDimension: true,
           duration: drupalSettings['mas']['timeline_period']
         });
         
@@ -452,10 +449,10 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var geoJson = Drupal.markaspot_map.createGeoJson();
       var heatPoints = Drupal.markaspot_map.transformGeoJson2heat(geoJson, 4);
       return new L.heatLayer(heatPoints, {
-        radius: 10,
+        // radius: 10,
         blur: 25,
         maxZoom: 17,
-        maxOpacity: .4
+        // maxOpacity: .4
         
       });
       
@@ -581,7 +578,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               iconColor: iconColor
             });
           }
-          ;
         });
         var nid = request.extended_attributes.markaspot.nid;
         var statusColor = request.extended_attributes.markaspot.status_hex;
@@ -593,8 +589,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           time: request.requested_datetime
         });
         markerLayer.addLayer(marker);
-        console.log(marker.options.title);
-        
       });
       var size = markerLayer.getLayers().length;
       
