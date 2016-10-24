@@ -261,7 +261,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var color = marker.color;
       var circle = L.circle(marker.latlng, 1600 / currentZoom, {
         color: color,
-        weight: 3,
+        weight: 1,
         fillColor: color,
         fillOpacity: 0.3,
         opacity: 0.7
@@ -398,7 +398,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               color: '#ddd',
               className: "auto_hide",
               weight: 1,
-              fillColor: '#ccc',
+              fillColor: '#444',
               fillOpacity: 0.5
             });
             // map.panTo(latlng);
