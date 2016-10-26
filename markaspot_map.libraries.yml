@@ -1,9 +1,9 @@
 leaflet:
   js:
-    /libraries/leaflet/dist/leaflet.js: {}
+    /libraries/Leaflet/dist/leaflet.js: {}
   css:
     component:
-      /libraries/leaflet/dist/leaflet.css: {}
+      /libraries/Leaflet/dist/leaflet.css: {}
 
 leaflet.markercluster:
   js:
