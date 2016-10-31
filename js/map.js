@@ -46,7 +46,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         this._map.removeLayer(this._currentLayer);
       }
       if (layer.getLayers().length) {
-        // console.log(layer.getLayers().length);
         var requests = layer.getLayers().length;
         jQuery('.timecontrol-date').append(': ' + requests + ' ' + Drupal.t('Requests'));
         layer.addTo(this._map);
@@ -94,7 +93,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         $('#map').css('background-color:' + masSettings.map_background);
         var tileLayer = L.tileLayer(masSettings.osm_custom_tile_url);
         
-        
         var map = Drupal.Markaspot.maps[0];
         map.addLayer(tileLayer);
         // map.dragging.disable();
@@ -137,14 +135,14 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         var timeControls = L.easyButton({
           position: 'topright',
           states: [{
-            stateName: 'add-timecontrols',
+            stateName: 'add-timeControls',
             icon: 'fa-clock-o',
             title: 'add random markers',
             onClick: function (control) {
               
               var timeDimensionControl = Drupal.markaspot_map.showTimeController(map);
               var geoJsonTimedLayer = Drupal.markaspot_map.createGeoJsonTimedLayer(map);
-              control.state('remove-timecontrols');
+              control.state('remove-timeControls');
               
               control.timeDimensionControl = timeDimensionControl;
               map.addControl(control.timeDimensionControl);
@@ -152,28 +150,51 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               control.geoJsonTimedLayer = geoJsonTimedLayer;
               control.geoJsonTimedLayer.addTo(map);
               
-              control.heatMapLayer = Drupal.markaspot_map.createHeatMapLayer(map);
-              console.log(control.heatMapLayer);
-              // var heatPoints = L.FeatureGroup(control.heatMapLayer._latlngs);
-              
-              //console.log(heatPoints);
-              map.setView([masSettings.center_lat, masSettings.center_lng]);
-              control.heatMapLayer.addTo(map);
             }
           }, {
             icon: 'fa-clock-o active',
-            stateName: 'remove-timecontrols',
+            stateName: 'remove-timeControls',
             onClick: function (control) {
               
               map.removeControl(control.timeDimensionControl);
-              map.removeLayer(control.heatMapLayer);
               map.removeLayer(control.geoJsonTimedLayer);
-              control.state('add-timecontrols');
+              control.state('add-timeControls');
             },
             title: 'remove markers'
           }]
         });
         timeControls.addTo(map);
+  
+        // Show Markers additionally ob button click.
+        var heatControls = L.easyButton({
+          position: 'topright',
+          states: [{
+            stateName: 'add-heatControls',
+            icon: 'fa-tachometer',
+            title: 'add random markers',
+            onClick: function (control) {
+        
+              var timeDimensionControl = Drupal.markaspot_map.showTimeController(map);
+              var geoJsonTimedLayer = Drupal.markaspot_map.createGeoJsonTimedLayer(map);
+              control.state('remove-heatControls');
+              control.heatMapLayer = Drupal.markaspot_map.createHeatMapLayer(map);
+        
+              control.heatMapLayer.addTo(map);
+              console.log("Heatmap Layer added");
+        
+            }
+          }, {
+            icon: 'fa-tachometer active',
+            stateName: 'remove-heatControls',
+            onClick: function (control) {
+              map.removeLayer(control.heatMapLayer);
+              control.state('add-heatControls');
+            },
+            title: 'remove markers'
+          }]
+        });
+        heatControls.addTo(map);
+        
         // empty storedNids.
         localStorage.setItem("storedNids", JSON.stringify(''));
         // end once.
@@ -390,16 +411,18 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var geoJson = Drupal.markaspot_map.createGeoJson();
       // Set bounds from geojson.
       map.fitBounds(L.geoJson(geoJson).getBounds());
-      console.log(L.geoJson(geoJson).getBounds());
+  
+      var currentZoom = map.getZoom();
+            
       if (typeof geoJson !== 'undefined') {
         return L.geoJson(geoJson, {
           pointToLayer: function (feature, latlng) {
-            var circle = L.circle(latlng, 200, {
-              color: '#ddd',
+            var circle = L.circle(latlng, 2600 / currentZoom, {
+              color: '#333',
               className: "auto_hide",
               weight: 1,
-              fillColor: '#444',
-              fillOpacity: 0.5
+              fillColor: '#333',
+              fillOpacity: 0.2
             });
             // map.panTo(latlng);
             setTimeout(function () {
@@ -447,15 +470,16 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
     createHeatMapLayer: function () {
       
       var geoJson = Drupal.markaspot_map.createGeoJson();
+      console.log("Geojson created", geoJson.length);
       var heatPoints = Drupal.markaspot_map.transformGeoJson2heat(geoJson, 4);
+      console.log("heat points created");
       return new L.heatLayer(heatPoints, {
         // radius: 10,
         blur: 25,
         maxZoom: 17,
         // maxOpacity: .4
-        
       });
-      
+  
     },
     
     /*
