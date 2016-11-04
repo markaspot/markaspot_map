@@ -86,7 +86,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           fullscreenControl: true,
           scrollWheelZoom: false,
           maxZoom: 18,
-          setZoom: 16,
+          setZoom: 14,
           center: [masSettings.center_lat, masSettings.center_lng] // starting position
         });
         
@@ -96,12 +96,11 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         var map = Drupal.Markaspot.maps[0];
         map.addLayer(tileLayer);
         // map.dragging.disable();
-        map.dragging.disable();
         
         //markerLayer = new L.featureGroup();
         markerLayer = L.markerClusterGroup({
-          // disableClusteringAtZoom: 15,
-          // maxClusterRadius: 120
+          //disableClusteringAtZoom: 15,
+          maxClusterRadius: 20
         });
         
         map.addLayer(markerLayer);
@@ -180,8 +179,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               control.heatMapLayer = Drupal.markaspot_map.createHeatMapLayer(map);
         
               control.heatMapLayer.addTo(map);
-              console.log("Heatmap Layer added");
-        
             }
           }, {
             icon: 'fa-tachometer active',
@@ -278,9 +275,9 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       
       // get zoomlevel to set circle radius
       var currentZoom = map.getZoom();
-      
+  
       var color = marker.color;
-      var circle = L.circle(marker.latlng, 1600 / currentZoom, {
+      var circle = L.circle(marker.latlng, 3600 / currentZoom, {
         color: color,
         weight: 1,
         fillColor: color,
@@ -411,13 +408,12 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var geoJson = Drupal.markaspot_map.createGeoJson();
       // Set bounds from geojson.
       map.fitBounds(L.geoJson(geoJson).getBounds());
-  
       var currentZoom = map.getZoom();
             
       if (typeof geoJson !== 'undefined') {
         return L.geoJson(geoJson, {
           pointToLayer: function (feature, latlng) {
-            var circle = L.circle(latlng, 2600 / currentZoom, {
+            var circle = L.circle(latlng, 3600 / currentZoom, {
               color: '#333',
               className: "auto_hide",
               weight: 1,
@@ -470,9 +466,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
     createHeatMapLayer: function () {
       
       var geoJson = Drupal.markaspot_map.createGeoJson();
-      console.log("Geojson created", geoJson.length);
       var heatPoints = Drupal.markaspot_map.transformGeoJson2heat(geoJson, 4);
-      console.log("heat points created");
       return new L.heatLayer(heatPoints, {
         // radius: 10,
         blur: 25,
@@ -617,7 +611,8 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var size = markerLayer.getLayers().length;
       
       if (size >= 1) {
-        Drupal.Markaspot.maps[0].fitBounds(markerLayer.getBounds());
+        // console.log(markerLayer.getBounds());
+        Drupal.Markaspot.maps[0].fitBounds(markerLayer.getBounds(), {padding: [-150, -150]});
       }
       return markerLayer;
       
