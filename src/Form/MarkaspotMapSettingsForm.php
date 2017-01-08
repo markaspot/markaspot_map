@@ -86,6 +86,13 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('nid_selector'),
       '#description' => t('Enter a valid DOM selector, e.g ".row article'),
     );
+    $form['markaspot_map']['zoom_initial'] = array(
+      '#type' => 'textfield',
+      '#size' => 2,
+      '#title' => t('Map zoom level on start'),
+      '#default_value' => $config->get('zoom_initial'),
+      '#description' => t('Enter the map zoom level on Load'),
+    );
 
     $form['markaspot_map']['center_lat'] = array(
       '#type' => 'textfield',
@@ -123,6 +130,7 @@ class MarkaspotMapSettingsForm extends ConfigFormBase {
       ->set('timeline_period', $values['timeline_period'])
       ->set('timeline_fps', $values['timeline_fps'])
       ->set('nid_selector', $values['nid_selector'])
+      ->set('zoom_initial', $values['zoom_initial'])
       ->set('center_lat', $values['center_lat'])
       ->set('center_lng', $values['center_lng'])
       ->save();
