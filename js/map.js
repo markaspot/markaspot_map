@@ -129,15 +129,15 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
             {
               icon: 'fa-map-marker active',
               stateName: 'remove-markers',
+              title: Drupal.t('Hide Markers'),
               onClick: function (control) {
                 Drupal.markaspot_map.hideMarkers();
                 control.state('add-markers');
               },
-              title: 'remove markers'
             }, {
               stateName: 'add-markers',
               icon: 'fa-map-marker',
-              title: 'Show all Markers on the map',
+              title: Drupal.t('Show Markers'),
               onClick: function (control) {
                 Drupal.markaspot_map.showMarkers();
                 control.state('remove-markers');
@@ -152,7 +152,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           states: [{
             stateName: 'add-timeControls',
             icon: 'fa-clock-o',
-            title: 'add random markers',
+            title: Drupal.t('Show TimeControl Layer'),
             onClick: function (control) {
               var heatStart = [
                 [masSettings.center_lat, masSettings.center_lng, 1]
@@ -174,6 +174,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           }, {
             icon: 'fa-clock-o active',
             stateName: 'remove-timeControls',
+            title: Drupal.t('Remove TimeControl Layer'),
             onClick: function (control) {
               $('div.log').hide();
               map.removeControl(control.timeDimensionControl);
@@ -182,7 +183,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
               $('ul.log_list').empty();
 
             },
-            title: 'remove markers'
           }]
         });
         timeControls.addTo(map);
@@ -193,7 +193,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           states: [{
             stateName: 'add-heatControls',
             icon: 'fa-thermometer-4',
-            title: 'add random markers',
+            title: Drupal.t('Show Heatmap'),
             onClick: function (control) {
               var timeDimensionControl = Drupal.markaspot_map.showTimeController(map);
               var geoJsonTimedLayer = Drupal.markaspot_map.createGeoJsonTimedLayer(map);
@@ -205,11 +205,11 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           }, {
             stateName: 'remove-heatControls',
             icon: 'fa-thermometer-4 active',
+            title: Drupal.t('Hide Heatmap'),
             onClick: function (control) {
               map.removeLayer(control.heatMapLayer);
               control.state('add-heatControls');
-            },
-            title: 'remove markers'
+            }
           }]
         });
         heatControls.addTo(map);
@@ -226,8 +226,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       // We check which nids are shown already and we now store nids in localStorage.
       var storedNids = JSON.parse(localStorage.getItem("storedNids"));
       var nids = Drupal.markaspot_map.getNids(masSettings.nid_selector);
-      // console.log("nids jquery", nids.length);
-      // console.log("stored on more", storedNids.length);
       
       if (nids.length != storedNids.length) {
         
@@ -248,8 +246,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           });
         }, nids);
       }
-      
-      
       // Theme independent selector
       var serviceRequests = $(masSettings.nid_selector);
       

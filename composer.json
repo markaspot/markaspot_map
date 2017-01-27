@@ -22,7 +22,7 @@
     "Leaflet/Leaflet": "1.0.2",
     "lvoogdt/Leaflet.awesome-markers": "2.0.2",
     "Leaflet/Leaflet.fullscreen": "1.0.1",
-    "CliffCloud/Leaflet.EasyButton": "1.3.1",
+    "CliffCloud/Leaflet.EasyButton": "2.0.0",
     "imakewebthings/waypoints": "4.0.0",
     "socib/Leaflet.TimeDimension": "1.0.6",
     "nezasa/iso8601-js-period": "0.2.0.0",
@@ -76,10 +76,10 @@
       "type": "package",
       "package": {
         "name": "CliffCloud/Leaflet.EasyButton",
-        "version": "1.3.1",
+        "version": "2.0.0",
         "type": "drupal-library",
         "dist": {
-          "url": "https://github.com/CliffCloud/Leaflet.EasyButton/archive/v1.3.1.zip",
+          "url": "https://github.com/CliffCloud/Leaflet.EasyButton/archive/v2.0.0.zip",
           "type": "zip"
         }
       }
