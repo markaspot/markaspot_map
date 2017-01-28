@@ -23,7 +23,7 @@
     "socib/leaflet.timedimension": "1.0.6",
     "nezasa/iso8601-js-period": "0.2.0.0",
     "stevenlevithan/dateformat": "1.2.3",
-    "leaflet/leaflet": "1.0.2",
+    "leaflet-mas/leaflet": "1.0.2",
     "leaflet/leaflet.heat": "0.2.0",
     "leaflet/leaflet.markercluster": "1.0.0",
     "leaflet/leaflet.fullscreen": "1.0.1",
@@ -39,7 +39,7 @@
     {
       "type": "package",
       "package": {
-        "name": "leaflet/leaflet",
+        "name": "leaflet-mas/leaflet",
         "version": "1.0.2",
         "type": "drupal-library",
         "dist": {
@@ -152,18 +152,6 @@
         "type": "drupal-library",
         "dist": {
           "url": "https://github.com/Leaflet/Leaflet.markercluster/archive/v1.0.0.zip",
-          "type": "zip"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "fortawesome/font-awesome",
-        "version": "4.7.0",
-        "type": "drupal-library",
-        "dist": {
-          "url": "https://github.com/FortAwesome/Font-Awesome/archive/v4.7.0.zip",
           "type": "zip"
         }
       }
