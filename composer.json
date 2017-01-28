@@ -10,7 +10,6 @@
       "role": "Maintainer"
     }
   ],
-  
   "keywords": ["Drupal"],
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
@@ -76,7 +75,7 @@
     {
       "type": "package",
       "package": {
-        "name": "cliffcloud/leaflet.easybutton",
+        "name": "cliffcloud/leaflet.easyButton",
         "version": "2.0.0",
         "type": "drupal-library",
         "dist": {
@@ -124,7 +123,7 @@
     {
       "type": "package",
       "package": {
-        "name": "stevenlevithan/dateformat",
+        "name": "stevenlevithan/dateFormat",
         "version": "1.2.3",
         "type": "drupal-library",
         "dist": {
