@@ -27,7 +27,7 @@
     "leaflet/leaflet.heat": "0.2.0",
     "leaflet/leaflet.markercluster": "1.0.0",
     "leaflet/leaflet.fullscreen": "1.0.1",
-    "cliffcloud/leaflet.easybutton": "2.0.0",
+    "cliffcloud/leaflet.easyButton": "2.0.0",
     "lvoogdt/leaflet.awesome-markers": "2.0.2",
     "fortawesome/font-awesome": "4.7.0",
     "drupal/search_api": "1.x-dev",
