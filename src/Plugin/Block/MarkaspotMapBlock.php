@@ -25,7 +25,7 @@ class MarkaspotMapBlock extends BlockBase {
         'library' => array(
           'markaspot_map/leaflet',
           'markaspot_map/leaflet.awesome-markers',
-          'markaspot_map/leaflet.easybutton',
+          'markaspot_map/leaflet.easyButton',
           'markaspot_map/leaflet.fullscreen',
           'markaspot_map/waypoints',
           'markaspot_map/leaflet.heatmap',
