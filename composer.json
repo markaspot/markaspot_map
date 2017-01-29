@@ -20,15 +20,15 @@
   "require": {
     "composer/installers": "~1.0",
     "imakewebthings/waypoints": "4.0.0",
-    "socib/leaflet.timedimension": "1.0.6",
+    "socib/leaflet-timedimension": "1.0.6",
     "nezasa/iso8601-js-period": "0.2.0.0",
     "stevenlevithan/dateformat": "1.2.3",
     "leaflet-mas/leaflet": "1.0.2",
-    "leaflet/leaflet.heat": "0.2.0",
-    "leaflet/leaflet.markercluster": "1.0.0",
-    "leaflet/leaflet.fullscreen": "1.0.1",
-    "cliffcloud/leaflet.easyButton": "2.0.0",
-    "lvoogdt/leaflet.awesome-markers": "2.0.2",
+    "leaflet/leaflet-heat": "0.2.0",
+    "leaflet/leaflet-markercluster": "1.0.0",
+    "leaflet/leaflet-fullscreen": "1.0.1",
+    "cliffcloud/leaflet-easyButton": "2.0.0",
+    "lvoogdt/leaflet-awesome-markers": "2.0.2",
     "fortawesome/font-awesome": "4.7.0",
     "drupal/search_api": "1.x-dev",
     "drupal/views_infinite_scroll": "1.x-dev",
@@ -51,7 +51,7 @@
     {
       "type": "package",
       "package": {
-        "name": "lvoogdt/leaflet.awesome-markers",
+        "name": "lvoogdt/leaflet-awesome-markers",
         "version": "2.0.2",
         "type": "drupal-library",
         "dist": {
@@ -63,7 +63,7 @@
     {
       "type": "package",
       "package": {
-        "name": "leaflet/leaflet.fullscreen",
+        "name": "leaflet/leaflet-fullscreen",
         "version": "1.0.1",
         "type": "drupal-library",
         "dist": {
@@ -75,7 +75,7 @@
     {
       "type": "package",
       "package": {
-        "name": "cliffcloud/leaflet.easyButton",
+        "name": "cliffcloud/leaflet-easyButton",
         "version": "2.0.0",
         "type": "drupal-library",
         "dist": {
@@ -99,7 +99,7 @@
     {
       "type": "package",
       "package": {
-        "name": "socib/leaflet.timedimension",
+        "name": "socib/leaflet-timedimension",
         "version": "1.0.6",
         "type": "drupal-library",
         "dist": {
@@ -135,7 +135,7 @@
     {
       "type": "package",
       "package": {
-        "name": "leaflet/leaflet.heat",
+        "name": "leaflet/leaflet-heat",
         "version": "0.2.0",
         "type": "drupal-library",
         "dist": {
@@ -147,7 +147,7 @@
     {
       "type": "package",
       "package": {
-        "name": "leaflet/leaflet.markercluster",
+        "name": "leaflet/leaflet-markercluster",
         "version": "1.0.0",
         "type": "drupal-library",
         "dist": {
