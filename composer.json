@@ -156,12 +156,5 @@
         }
       }
     }
-  ],
-  "extra": {
-    "installer-paths": {
-      "../libraries/{$name}": [
-        "type:drupal-library"
-      ]
-    }
-  }
+  ]
 }
