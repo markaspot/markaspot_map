@@ -107,11 +107,11 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         var tileLayer = L.tileLayer(masSettings.osm_custom_tile_url);
 
         var map = Drupal.Markaspot.maps[0];
+        map.attributionControl.addAttribution(masSettings.osm_custom_attribution);
 
         map.addLayer(tileLayer);
 
         markerLayer = L.markerClusterGroup({
-          // disableClusteringAtZoom: 15,.
           maxClusterRadius: 20
         });
 
