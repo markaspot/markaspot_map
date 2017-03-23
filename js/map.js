@@ -120,7 +120,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         // Drupal.markaspot_map.hideMarkers();
         // Show Markers additionally ob button click.
         var categoryMarker = L.easyButton({
-          position: 'topright',
+          position: 'topleft',
           states: [
             {
               icon: 'fa-map-marker active',
@@ -145,7 +145,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
         // Show Markers additionally ob button click.
         var timeControls = L.easyButton({
-          position: 'topright',
+          position: 'bottomright',
           states: [
             {
               stateName: 'add-timeControls',
@@ -188,7 +188,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
         // Show Markers additionally ob button click.
         var heatControls = L.easyButton({
-          position: 'topright',
+          position: 'bottomright',
           states: [
             {
               stateName: 'add-heatControls',
@@ -510,6 +510,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
      * Hide Layers
      */
     hideMarkers: function () {
+      console.log("hide");
       Drupal.Markaspot.maps[0].closePopup();
       Drupal.Markaspot.maps[0].removeLayer(markerLayer);
     },
@@ -520,39 +521,24 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
     /*
      * Actions on Marker Click and Hover
      */
-    markerClickFn: function (nid) {
+    markerClickFn: function (marker, nid) {
+
       return function () {
-        var target = document.getElementById('map');
-
         var map = Drupal.Markaspot.maps[0];
-        map.closePopup();
-        var report_url = Drupal.settings.basePath + 'georeport/v2/requests/' + id + '.json';
-        $.getJSON(report_url).success(function (data) {
-          var description = data[0].description ? data[0].description : "";
-          var request = data[0].media_url ? '<img style="height: 80px; margin: 10px 10px 10px 0" src="' + data[0].media_url + '" class="map img-thumbnail pull-left"><p class="report-detail">' + description + '</p>' : '<p class="report-detail">' + description + '</p>';
-          request += '<div><a class="infowindow-link" href="' + Drupal.settings.basePath + 'reports/' + id + '">' + Drupal.t('read more') + '</a></div>';
-
-          L.popup({autoPanPadding: new L.Point(10, 150)})
-            .setLatLng(latlon)
-            .setContent(html + request + '</div>')
-            .openOn(map);
-          // spinner.stop();
-        }).fail(function () {
-          // spinner.stop();
-        });
-
-        map.on('popupopen', function () {
-          if ($(window).width() >= 1000) {
-            $('.map.img-thumbnail').popover({
-              html: true,
-              trigger: 'hover',
-              placement: 'left',
-              content: function () {
-                return '<img class="img-thumbnail" style="float:right;width:320px;max-width:320px;" src="' + $(this)[0].src + '" />';
-              }
-            });
-          }
-        });
+        var fullscreen = map.isFullscreen();
+        var target = $('article[data-history-node-id=' + nid + ']');
+        console.log(fullscreen);
+        // var target = document.querySelector('data-history-node-id') = nid;
+        // var anchor = $(this).attr('data-attr-scroll');
+        if( target.length && fullscreen == false) {
+          event.preventDefault();
+          $('html, body').stop().animate({
+            scrollTop: target.offset().top + 200
+          }, 1000);
+        } else if (target.length && fullscreen == true) {
+          html = target.text();
+          marker.bindPopup(html);
+        }
       };
     },
     getAwesomeColors: function () {
@@ -636,6 +622,8 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           color: statusColor,
           time: request.requested_datetime
         });
+        marker.on('click', Drupal.markaspot_map.markerClickFn(marker, nid));
+
         markerLayer.addLayer(marker);
       });
       var size = markerLayer.getLayers().length;
