@@ -510,7 +510,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
      * Hide Layers
      */
     hideMarkers: function () {
-      console.log("hide");
       Drupal.Markaspot.maps[0].closePopup();
       Drupal.Markaspot.maps[0].removeLayer(markerLayer);
     },
@@ -527,13 +526,12 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         var map = Drupal.Markaspot.maps[0];
         var fullscreen = map.isFullscreen();
         var target = $('article[data-history-node-id=' + nid + ']');
-        console.log(fullscreen);
         // var target = document.querySelector('data-history-node-id') = nid;
         // var anchor = $(this).attr('data-attr-scroll');
         if( target.length && fullscreen == false) {
           event.preventDefault();
           $('html, body').stop().animate({
-            scrollTop: target.offset().top + 200
+            scrollTop: target.offset().top - 200
           }, 1000);
         } else if (target.length && fullscreen == true) {
           html = target.text();
