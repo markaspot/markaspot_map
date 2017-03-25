@@ -20,7 +20,7 @@ class MarkaspotMapBlock extends BlockBase {
   public function build() {
     return array(
       '#type' => 'markup',
-      '#markup' => '<div id="map"><div class="log"><div class="log_header"><span class="left"></span><span class="right"></span></div><ul class="log_list"></ul></div></div>',
+      '#markup' => '<ul class="notifications"></ul><div id="map" data-slideout-ignore><div class="log"><div class="log_header"><span class="left"></span><span class="right"></span></div><ul class="log_list"></ul></div></div>',
       '#attached' => array(
         'library' => array(
           'markaspot_map/leaflet',
@@ -31,7 +31,6 @@ class MarkaspotMapBlock extends BlockBase {
           'markaspot_map/leaflet-heatmap',
           'markaspot_map/font-awesome',
           'markaspot_map/leaflet-timedimension',
-          'markaspot_map/leaflet-transitionedicon',
           'markaspot_map/leaflet-markercluster',
           'markaspot_map/map',
         ),

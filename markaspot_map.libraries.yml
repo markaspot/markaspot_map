@@ -34,10 +34,6 @@ leaflet-easyButton:
     component:
        /libraries/leaflet-easyButton/src/easy-button.css: {}
 
-# leaflet.transitionedicon:
-#  js:
-#    /libraries/leaflet-transitionedicon/index.js: {}
-
 waypoints:
   js:
     /libraries/waypoints/lib/jquery.waypoints.min.js: {weight: -3}
