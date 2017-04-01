@@ -611,13 +611,17 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
             });
           }
         });
-        var nid = request.extended_attributes.markaspot.nid;
+
         var statusColor = request.extended_attributes.markaspot.status_hex;
+        var categoryColor = request.extended_attributes.markaspot.category_hex;
+
+        var nid = request.extended_attributes.markaspot.nid;
+        var markerColor = statusColor ? statusColor : categoryColor;
         var latlon = new L.LatLng(request.lat, request.long);
         var marker = new L.Marker(latlon, {
           icon: icon,
           title: nid,
-          color: statusColor,
+          color: markerColor,
           time: request.requested_datetime
         });
         marker.on('click', Drupal.markaspot_map.markerClickFn(marker, nid));
