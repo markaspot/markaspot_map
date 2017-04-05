@@ -524,16 +524,18 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
       return function () {
         var map = Drupal.Markaspot.maps[0];
+        var currentZoom = map.getZoom();
         var fullscreen = map.isFullscreen();
         var target = $('article[data-history-node-id=' + nid + ']');
         // var target = document.querySelector('data-history-node-id') = nid;
         // var anchor = $(this).attr('data-attr-scroll');
-        if( target.length && fullscreen == false) {
+        if( target.length && fullscreen === false) {
+          map.setZoom(currentZoom +2);
           event.preventDefault();
           $('html, body').stop().animate({
             scrollTop: target.offset().top - 200
           }, 1000);
-        } else if (target.length && fullscreen == true) {
+        } else if (target.length && fullscreen === true) {
           html = target.text();
           marker.bindPopup(html);
         }
