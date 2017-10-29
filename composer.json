@@ -30,7 +30,7 @@
     "cliffcloud/leaflet-easyButton": "2.0.0",
     "lvoogdt/leaflet-awesome-markers": "2.0.2",
     "fortawesome/font-awesome": "4.7.0",
-    "drupal/search_api": "1.x-dev",
+    "drupal/search_api": "~1.0",
     "drupal/views_infinite_scroll": "1.x-dev",
     "drupal/better_exposed_filters": "dev-3.x",
     "markaspot/service_request": "~8.3"
