@@ -298,29 +298,29 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
     // Showing a Circle Marker on hover and scroll over.
     showCircle: function (marker) {
       var map = Drupal.Markaspot.maps[0];
-
       // Get zoomlevel to set circle radius.
       var currentZoom = map.getZoom();
+      if (marker !== null) {
+        var color = marker.color;
+        var circle = L.circle(marker.latlng, 2600 / currentZoom, {
+          color: color,
+          weight: 1,
+          fillColor: color,
+          fillOpacity: 0.3,
+          opacity: 0.7
+        }).addTo(map);
 
-      var color = marker.color;
-      var circle = L.circle(marker.latlng, 2600 / currentZoom, {
-        color: color,
-        weight: 1,
-        fillColor: color,
-        fillOpacity: 0.3,
-        opacity: 0.7
-      }).addTo(map);
+        map.panTo(marker.latlng, {
+          animate: true,
+          duration: 0.5
+        });
 
-      map.panTo(marker.latlng, {
-        animate: true,
-        duration: 0.5
-      });
-
-      // map.setView(marker.latlng, 15);.
-      setTimeout(function () {
-        // marker.setIcon(icon);
-        map.removeLayer(circle);
-      }, 1300);
+        // map.setView(marker.latlng, 15);.
+        setTimeout(function () {
+          // marker.setIcon(icon);
+          map.removeLayer(circle);
+        }, 1300);
+      }
     },
 
     showTimeController: function (map) {
