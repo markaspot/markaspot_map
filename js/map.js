@@ -117,6 +117,17 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
         map.addLayer(markerLayer);
 
+        // Initital heat map layer for front page:
+
+        var currentPath = drupalSettings.path.currentPath;
+
+        if (currentPath === 'node' ) {
+          var heatMapLayer = Drupal.markaspot_map.createHeatMapLayer(map);
+          console.log(heatMapLayer);
+          heatMapLayer.addTo(map);
+          Drupal.markaspot_map.setDefaults(masSettings);
+        }
+
         // Drupal.markaspot_map.hideMarkers();
         // Show Markers additionally ob button click.
         var categoryMarker = L.easyButton({
@@ -228,8 +239,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var nids = Drupal.markaspot_map.getNids(masSettings.nid_selector);
 
       if (!nids.length) {
-        var defaultCenter = new L.latLng(masSettings.center_lat, masSettings.center_lng);
-        Drupal.Markaspot.maps[0].setView(defaultCenter, masSettings.zoom_initial);
+        Drupal.markaspot_map.setDefaults(masSettings);
       }
 
       if (nids.length != storedNids.length) {
@@ -294,13 +304,16 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
     settings: function (drupalSettings) {
       return drupalSettings;
     },
-
+    setDefaults: function(masSettings){
+      var defaultCenter = new L.latLng(masSettings.center_lat, masSettings.center_lng);
+      Drupal.Markaspot.maps[0].setView(defaultCenter, masSettings.zoom_initial);
+    },
     // Showing a Circle Marker on hover and scroll over.
     showCircle: function (marker) {
       var map = Drupal.Markaspot.maps[0];
       // Get zoomlevel to set circle radius.
       var currentZoom = map.getZoom();
-      if (marker !== null) {
+      if (typeof marker !== 'undefined') {
         var color = marker.color;
         var circle = L.circle(marker.latlng, 2600 / currentZoom, {
           color: color,
