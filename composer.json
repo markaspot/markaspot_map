@@ -23,7 +23,7 @@
     "socib/leaflet-timedimension": "1.0.6",
     "nezasa/iso8601-js-period": "0.2.0.0",
     "stevenlevithan/dateformat": "1.2.3",
-    "leaflet-mas/leaflet": "1.0.3",
+    "leaflet-mas/leaflet": "1.2.0",
     "leaflet/leaflet-heat": "0.2.0",
     "leaflet/leaflet-markercluster": "1.0.0",
     "leaflet/leaflet-fullscreen": "1.0.1",
@@ -40,10 +40,10 @@
       "type": "package",
       "package": {
         "name": "leaflet-mas/leaflet",
-        "version": "1.0.3",
+        "version": "1.2.0",
         "type": "drupal-library",
         "dist": {
-          "url": "https://github.com/Leaflet/Leaflet/archive/v1.0.3.zip",
+          "url": "https://github.com/Leaflet/Leaflet/archive/v1.2.0.zip",
           "type": "zip"
         },
         "require": {
