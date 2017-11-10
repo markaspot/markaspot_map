@@ -20,10 +20,10 @@
   "require": {
     "composer/installers": "~1.0",
     "imakewebthings/waypoints": "4.0.0",
-    "socib/leaflet-timedimension": "1.1.0",
     "nezasa/iso8601-js-period": "0.2.0.0",
     "stevenlevithan/dateformat": "1.2.3",
-    "leaflet-mas/leaflet": "1.2.0",
+    "npm-asset/leaflet": "1.2.0",
+    "npm-asset/leaflet-timedimension": "^1.0",
     "leaflet/leaflet-heat": "0.2.0",
     "leaflet/leaflet-markercluster": "1.0.0",
     "leaflet/leaflet-fullscreen": "1.0.1",
@@ -37,19 +37,8 @@
   },
   "repositories": [
     {
-      "type": "package",
-      "package": {
-        "name": "leaflet-mas/leaflet",
-        "version": "1.2.0",
-        "type": "drupal-library",
-        "dist": {
-          "url": "https://github.com/Leaflet/Leaflet/archive/v1.2.0.zip",
-          "type": "zip"
-        },
-        "require": {
-          "composer/installers": "~1.0"
-        }
-      }
+      "type": "composer",
+      "url": "https://asset-packagist.org"
     },
     {
       "type": "package",
@@ -104,21 +93,6 @@
         "type": "drupal-library",
         "dist": {
           "url": "https://github.com/imakewebthings/waypoints/archive/4.0.0.zip",
-          "type": "zip"
-        },
-        "require": {
-          "composer/installers": "~1.0"
-        }
-      }
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "socib/leaflet-timedimension",
-        "version": "1.1.0",
-        "type": "drupal-library",
-        "dist": {
-          "url": "https://github.com/socib/Leaflet.TimeDimension/archive/v1.1.0.zip",
           "type": "zip"
         },
         "require": {
