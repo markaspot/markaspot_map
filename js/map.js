@@ -30,7 +30,6 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       var layers = this._baseLayer.getLayers();
       for (var i = 0, l = layers.length; i < l; i++) {
         var feature = this._getFeatureBetweenDates(layers[i].feature, minTime, maxTime);
-
         if (feature) {
 
           var coordinates = feature.geometry.coordinates;
@@ -123,8 +122,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
         if (currentPath === 'node' ) {
           var heatMapLayer = Drupal.markaspot_map.createHeatMapLayer(map);
-          console.log(heatMapLayer);
-          heatMapLayer.addTo(map);
+          // heatMapLayer.addTo(map);
           Drupal.markaspot_map.setDefaults(masSettings);
         }
 
@@ -154,49 +152,14 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         });
         categoryMarker.addTo(map);
 
+        var geoJsonTimedLayer = Drupal.markaspot_map.createGeoJsonTimedLayer(map);
+        var heatStart = [
+          [masSettings.center_lat, masSettings.center_lng, 1]
+        ];
+        var heatLayer = new L.heatLayer(heatStart).addTo(map);
+        heatLayer.id = "heatTimedLayer";
         // Show Markers additionally ob button click.
-        var timeControls = L.easyButton({
-          position: 'bottomright',
-          states: [
-            {
-              stateName: 'add-timeControls',
-              icon: 'fa-clock-o',
-              title: Drupal.t('Show TimeControl Layer'),
-              onClick: function (control) {
-                var heatStart = [
-                  [masSettings.center_lat, masSettings.center_lng, 1]
-                ];
-                var heatLayer = new L.heatLayer(heatStart).addTo(map);
-                heatLayer.id = "heatTimedLayer";
-                $('div.log').show();
-
-                var timeDimensionControl = Drupal.markaspot_map.showTimeController(map);
-                var geoJsonTimedLayer = Drupal.markaspot_map.createGeoJsonTimedLayer(map);
-                control.state('remove-timeControls');
-
-                control.timeDimensionControl = timeDimensionControl;
-                map.addControl(control.timeDimensionControl);
-
-                control.geoJsonTimedLayer = geoJsonTimedLayer;
-                control.geoJsonTimedLayer.addTo(map);
-              }
-            }, {
-              icon: 'fa-clock-o active',
-              stateName: 'remove-timeControls',
-              title: Drupal.t('Remove TimeControl Layer'),
-              onClick: function (control) {
-                $('div.log').hide();
-                map.removeControl(control.timeDimensionControl);
-                map.removeLayer(control.geoJsonTimedLayer);
-                control.state('add-timeControls');
-                $('ul.log_list').empty();
-
-              },
-            }
-          ]
-        });
-        timeControls.addTo(map);
-
+        var timeDimensionControl = Drupal.markaspot_map.showTimeController(map);
         // Show Markers additionally ob button click.
         var heatControls = L.easyButton({
           position: 'bottomright',
@@ -225,6 +188,44 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
           ]
         });
         heatControls.addTo(map);
+
+        var timeControls = L.easyButton({
+          position: 'bottomright',
+          states: [
+            {
+              stateName: 'add-timeControls',
+              icon: 'fa-clock-o',
+              title: Drupal.t('Show TimeControl Layer'),
+              onClick: function (control) {
+
+
+                $('div.log').show();
+
+
+                control.state('remove-timeControls');
+
+                map.addControl(timeDimensionControl);
+                heatLayer.addTo(map);
+                geoJsonTimedLayer.addTo(map);
+              }
+            }, {
+              icon: 'fa-clock-o active',
+              stateName: 'remove-timeControls',
+              title: Drupal.t('Remove TimeControl Layer'),
+              onClick: function (control) {
+                $('div.log').hide();
+                map.removeControl(timeDimensionControl);
+                map.removeLayer(geoJsonTimedLayer);
+                map.removeLayer(heatLayer);
+
+                control.state('add-timeControls');
+                $('ul.log_list').empty();
+              },
+            }
+          ]
+        });
+        timeControls.addTo(map);
+
 
         // Empty storedNids.
         localStorage.setItem("storedNids", JSON.stringify(''));
@@ -345,77 +346,27 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
       // Helper to share the timeDimension object between all layers.
       map.timeDimension = timeDimension;
 
-      // Otherwise you have to set the 'timeDimension' option on all layers.
-      var player = new L.TimeDimension.Player({
-        transitionTime: 0,
-        loop: false,
-        startOver: true
-      }, timeDimension);
 
       L.Control.TimeDimensionCustom = L.Control.TimeDimension.extend({
         _getDisplayDateFormat: function (date) {
           return date.format(drupalSettings['mas']['timeline_date_format']);
         },
-        _onPlayerStateChange: function () {
-          // console.log("_onPlayerStateChange")
-        },
-        _update: function () {
-          // console.log(this._timeDimension);.
-          if (!this._timeDimension) {
-            return;
-          }
-          var time = this._timeDimension.getCurrentTime();
-          if (time > 0) {
-            var date = new Date(time);
-            if (this._displayDate) {
-              L.DomUtil.removeClass(this._displayDate, 'loading');
-              this._displayDate.innerHTML = this._getDisplayDateFormat(date);
-            }
-            if (this._sliderTime && !this._slidingTimeSlider) {
-              this._sliderTime.setValue(this._timeDimension.getCurrentTimeIndex());
-              // console.log(this._timeDimension._syncedLayers[0]._currentLayer);.
-              var currentLayer = this._timeDimension._syncedLayers[0]._currentLayer;
-              if (currentLayer) {
-                // console.log(currentLayer);
-              }
-            }
-          }
-          else {
-            if (this._displayDate) {
-              this._displayDate.innerHTML = this._getDisplayNoTimeError();
-            }
-          }
-        },
-        options: {
-          player: player,
-          timeDimension: timeDimension,
+
+        options:{
           position: 'bottomright',
+          autoPlay: true,
           timeSlider: false,
-          backwardButton: false,
-          forwardButton: false,
-          playReverseButton: false,
-          displayDate: false,
-          timeSliderDragUpdate: false,
-          limitSliders: false,
-          limitMinimumRange: 5,
-          speedSlider: true,
           loopButton: true,
-          minSpeed: 15,
-          speedStep: 1,
-          maxSpeed: 30
+          playerOptions: {
+            transitionTime: 125,
+            loop: true,
+          }
         }
       });
-
-      return new L.Control.TimeDimensionCustom({
-        playerOptions: {
-          buffer: 1,
-          minBufferReady: -1
-        }
-      });
-    },
-    hideTimeController: function (map) {
+      return new L.Control.TimeDimensionCustom();
 
     },
+
     createGeoJson: function () {
 
       // Retrieve static Data.
@@ -473,8 +424,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
 
     createGeoJsonTimedLayer: function (map) {
 
-      var geoJsonLayer = Drupal.markaspot_map.createGeoJsonLayer(map);
-
+      geoJsonLayer = (typeof geoJsonLayer !== 'undefined') ? geoJsonLayer : Drupal.markaspot_map.createGeoJsonLayer(map);
       // console.log(drupalSettings['mas']['timeline_period']);.
       if (typeof geoJsonLayer !== 'undefined') {
         return new L.TimeDimension.Layer.MaS(geoJsonLayer, {
