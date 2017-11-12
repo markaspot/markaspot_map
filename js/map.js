@@ -618,7 +618,7 @@ L.TimeDimension.Layer.MaS = L.TimeDimension.Layer.GeoJson.extend(
         .done(function (data) {
           getData(data);
         })
-        .error(function (data) {
+        .fail(function (data) {
           getData(data);
         });
     },
