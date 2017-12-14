@@ -29,10 +29,10 @@ leaflet-fullscreen:
 
 leaflet-easyButton:
   js:
-    /libraries/leaflet-easyButton/src/easy-button.js: {}
+    /libraries/leaflet-easybutton/src/easy-button.js: {}
   css:
     component:
-       /libraries/leaflet-easyButton/src/easy-button.css: {}
+       /libraries/leaflet-easybutton/src/easy-button.css: {}
 
 waypoints:
   js:
