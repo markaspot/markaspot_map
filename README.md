@@ -1,4 +1,5 @@
-# Mark-a-Spot Map module 
+# Mark-a-Spot Map module [deprecated]
+This module has been moved to [Mark-a-Spot Core installation profile](github.com/markaspot/markaspot)
 
 This module enables a leaflet based map block with the following features
 - read all NIDs from a list of teasers or nodes
